@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-api
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-api-container
+        image: {{ .Values.api.image }} #fabricioveronez/catalogo-produto:v1
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        env:
+          - name: Mongo__User
+            value: {{ .Values.mongodb.credentials.username }}
+          - name: Mongo__Password
+            value: {{ .Values.mongodb.credentials.password }}
+          - name: Mongo__Host
+            value: {{ .Release.Name }}-mongo-service
+          - name: Mongo__DataBase
+            value: {{ .Values.mongodb.databaseName }}

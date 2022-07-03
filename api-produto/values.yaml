@@ -1,0 +1,13 @@
+api:
+  image: fabricioveronez/catalogo-produto:v1
+  serviceType: ClusterIP
+  ingress:
+    enabled: true
+    hosts: ["localhost"]
+
+mongodb:
+  tag: 5.0.5
+  databaseName: admin
+  credentials:
+    username: mongouser
+    password: mongopwd
